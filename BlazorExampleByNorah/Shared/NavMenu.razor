@@ -1,37 +1,84 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">BlazorExampleByNorah</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
+﻿@* Design From https://bootsnipp.com/snippets/Q0dAX *@
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-    </ul>
+<div class="page-wrapper chiller-theme toggled">
+    <nav id="sidebar" class="sidebar-wrapper">
+        <div class="sidebar-content">
+            <div class="sidebar-brand">
+                <a href="#">pro sidebar</a>
+                <div id="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <ul>
+                    <li class="header-menu">
+                        <span>Example</span>
+                    </li>
+                    <li>
+                        <NavLink href="AnimateEx">AnimateEx</NavLink>
+                    </li>
+                    <li>
+                        <NavLink href="ComponentsEx">ComponentsEx</NavLink>
+                    </li>
+                    <li>
+                        <NavLink href="CookieEx">CookieEx</NavLink>
+                    </li>
+                    <li>
+                        <NavLink href="DBEx">DBEx</NavLink>
+                    </li>
+                    <li>
+                        <NavLink href="GenericEx">GenericEx</NavLink>
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <NavLink @onclick="ShowSideMenu">InputEx</NavLink>
+                        <div class="sidebar-submenu @inputSubMenuCSS">
+                            <ul>
+                                <li>
+                                    <NavLink href="counter">Text, Selection</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink href="counter">Radio, Checkbox</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink href="counter">Separated link</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink href="counter">One more separated link</NavLink>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <NavLink href="JsonEx">JsonEx</NavLink>
+                    </li>
+                    <li>
+                        <NavLink href="LogEx">LogEx</NavLink>
+                    </li>
+                    <li>
+                        <NavLink href="OptionPatternEx">OptionPatternEx</NavLink>
+                    </li>
+                    <li>
+                        <NavLink href="SessionEx">SessionEx</NavLink>
+                    </li>
+                    <li>
+                        <NavLink href="SettingsEx">SettingsEx</NavLink>
+                    </li>
+                    <li>
+                        <NavLink href="WebAPIEx">WebAPIEx</NavLink>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidebar-menu  -->
+        </div>
+    </nav>
 </div>
 
 @code {
-    private bool collapseNavMenu = true;
+    private bool isShowForInputSubMenu = false;
+    private string inputSubMenuCSS => isShowForInputSubMenu ? "active display" : "hidden";
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    protected void ShowSideMenu()
     {
-        collapseNavMenu = !collapseNavMenu;
+        isShowForInputSubMenu = !isShowForInputSubMenu;
     }
 }
