@@ -11,7 +11,6 @@
     <Folder Include="Pages\JsonEx\" />
     <Folder Include="Pages\DIEx\" />
     <Folder Include="Pages\GenericEx\" />
-    <Folder Include="Pages\ComponentsEx\" />
     <Folder Include="Pages\AnimateEx\" />
     <Folder Include="Pages\OptionPatternEx\" />
     <Folder Include="Pages\WebAPIEx\" />

@@ -1,0 +1,24 @@
+﻿@page "/ComponentEx/StateContainerWithComponent"
+@inject MessageManager messageManager
+
+<h3>Main</h3>
+<button class="btn btn-primary" @onclick="ClickMainBtn">Main Button</button>
+<button class="btn btn-primary" @onclick="ClickCompBtnInMain">Comp Button In Main</button>
+<h4>@message</h4>
+<hr />
+<Component/>
+
+@code {
+    private string message;
+    private int count;
+
+    public void ClickMainBtn()
+    {
+        message = $"Click MainBtn : {++count}";
+    }
+
+    protected void ClickCompBtnInMain()
+    {
+        messageManager.ClickCompBtn();
+    }
+}

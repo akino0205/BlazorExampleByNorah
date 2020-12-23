@@ -11,8 +11,24 @@
                     <li>
                         <NavLink href="AnimateEx">AnimateEx</NavLink>
                     </li>
-                    <li>
-                        <NavLink href="ComponentsEx">ComponentsEx</NavLink>
+                    <li class="sidebar-dropdown @ComponentSideBarCSS">
+                        <NavLink @onclick="ShowComponentSideMenu">ComponentsEx</NavLink>
+                        <div class="sidebar-submenu @ComponentSubMenuCSS">
+                            <ul>
+                                <li>
+                                    <NavLink href="/EventCallbacks/Parent">EventCallbacks</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink href="/CascadingValues/Main">CascadingValues</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink href="/StateContainer/Main">StateContainer</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink href="/ComponentEx/StateContainerWithComponent">StateContainerWithComponent</NavLink>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <li>
                         <NavLink href="CookieEx">CookieEx</NavLink>
@@ -75,6 +91,10 @@
 </div>
 
 @code { 
+    private bool isShowForComponentSubMenu = false;
+    private string ComponentSubMenuCSS => setDisplay(isShowForComponentSubMenu);
+    private string ComponentSideBarCSS => setActive(isShowForComponentSubMenu);
+
     private bool isShowForDBSubMenu = false;
     private string DBSubMenuCSS => setDisplay(isShowForDBSubMenu);
     private string DBSideBarCSS => setActive(isShowForDBSubMenu);
@@ -84,6 +104,11 @@
     private string inputSideBarCSS => setActive(isShowForInputSubMenu);
 
     #region Show Method
+    protected void ShowComponentSideMenu()
+    {
+        isShowForComponentSubMenu = !isShowForComponentSubMenu;
+    }
+
     protected void ShowDBSideMenu()
     {
         isShowForDBSubMenu = !isShowForDBSubMenu;

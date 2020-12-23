@@ -1,17 +1,11 @@
 using BlazorExampleByNorah.Data;
 using BlazorExampleByNorah.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace BlazorExampleByNorah
 {
@@ -30,6 +24,10 @@ namespace BlazorExampleByNorah
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            //ComponentEx
+            services.AddScoped<AppStateForComponent>();
+            services.AddScoped<MessageManager>();
 
             //DBEx 
             services.AddScoped<IGroupService, GroupService>();
