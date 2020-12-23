@@ -1,0 +1,16 @@
+﻿@page "/ComponentEx/ComponentObjectParameter"
+
+<h3>Main</h3>
+<button class="btn btn-primary" @onclick="ClickMainBtn">Main Button</button>
+<h4>@message</h4>
+<hr />
+<Component mainPage=this/>
+@code {
+    private string message;
+    private int count;
+    public void ClickMainBtn()
+    {
+        message = $"Click MainBtn : {++count}";
+        StateHasChanged();
+    }
+}

@@ -1,0 +1,22 @@
+﻿<h3>Component</h3>
+<button class="btn btn-primary" @onclick="ClickCompBtn">Comp Button</button>
+<button class="btn btn-primary" @onclick="ClickMainBtnInComp">Main Button</button>
+<h4>@message</h4>
+
+@code {
+    [Parameter]
+    public Main mainPage { get; set; }
+
+    private string message;
+    private int count;
+
+    public void ClickCompBtn()
+    {
+        message = $"Click CompBtn : {++count}";
+    }
+
+    public void ClickMainBtnInComp()
+    {
+        mainPage.ClickMainBtn();
+    }
+}

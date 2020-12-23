@@ -1,0 +1,14 @@
+﻿<h3>Component</h3>
+<button class="btn btn-primary" @onclick="ClickCompBtn">Comp Button</button>
+<h4>@message</h4>
+
+@code {
+    private string message;
+    private int count;
+
+    public void ClickCompBtn()
+    {
+        message = $"Click CompBtn : {++count}";
+        StateHasChanged();
+    }
+}
