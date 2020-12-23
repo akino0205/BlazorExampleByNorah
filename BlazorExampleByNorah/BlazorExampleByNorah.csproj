@@ -1,15 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Pages\LogEx\" />
     <Folder Include="Pages\CookieEx\" />
     <Folder Include="Pages\InputEx\" />
-    <Folder Include="Pages\DBEx\" />
     <Folder Include="Pages\JsonEx\" />
     <Folder Include="Pages\DIEx\" />
     <Folder Include="Pages\GenericEx\" />
@@ -19,6 +17,11 @@
     <Folder Include="Pages\WebAPIEx\" />
     <Folder Include="Pages\SettingsEx\" />
     <Folder Include="Pages\SessionEx\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

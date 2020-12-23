@@ -1,4 +1,5 @@
 using BlazorExampleByNorah.Data;
+using BlazorExampleByNorah.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace BlazorExampleByNorah
@@ -28,7 +30,13 @@ namespace BlazorExampleByNorah
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+
+            //DBEx 
+            services.AddScoped<IGroupService, GroupService>();
+            services.AddTransient<HttpClient>();
+
+            //SettingsEx
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

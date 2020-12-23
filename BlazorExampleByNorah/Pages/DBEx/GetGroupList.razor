@@ -1,0 +1,93 @@
+﻿@page "/DBEx/GetGroupList"
+@inject IGroupService GroupService
+
+<h2>DBEx - Get Group List</h2>
+@if (paginatedGroupItems == null || paginatedGroupItems.Data == null || !paginatedGroupItems.Data.Any())
+{
+
+    <table class="list_contentTable">
+        <tr>
+            <td>No data was returned.</td>
+        </tr>
+    </table>
+
+}
+else
+{
+
+    <table class="table">
+        <colgroup>
+            <col style="width: 200px;" />
+            <col style="width: 100px;" />
+            <col />
+            <col style="width: 100px;" />
+            <col style="width: 100px;" />
+            <col style="width: 100px;" />
+            <col style="width: 200px;" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>ID</th>
+                <th>Desc</th>
+                <th>Level</th>
+                <th>Expiry</th>
+                <th>Update</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var groupItem in paginatedGroupItems.Data)
+            {
+                <tr>
+                    <td><a @onclick="(()=> GetMember((groupItem.Code, groupItem.Desc)))">@groupItem.Code</a></td>
+                    <td>@groupItem.Id</td>
+                    <td>@groupItem.Desc</td>
+                    <td>@groupItem.Level</td>
+                    <td @onclick="(()=> DisplayExpiry(groupItem.Expiry.ToString()))">@HtmlUtil.DisplayDateTime(groupItem.Expiry)</td>
+                    <td>@groupItem.Update</td>
+                    <td>
+                        <a href="@($"/Group/Details/{groupItem.Code}")">Details</a>
+                        <a href="@($"/Group/Edit/{groupItem.Code}")">Edit</a>
+                        <a href="@($"/Group/Delete/{groupItem.Code}")">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+@code {
+    int pageSize = 5;
+    int pageIndex = 0;
+
+    int memPageSize = 100;
+    int memPageIndex = 0;
+
+    string message = "Not yet.";
+    string exp = "Not yet.";
+
+    PaginatedItemsViewModel<GroupItem> paginatedGroupItems;
+
+    protected override void OnParametersSet() => LoadPage();
+
+    void LoadPage()
+    {
+        paginatedGroupItems = GroupService.GetGroupItemsPaginated(pageSize, pageIndex);
+    }
+
+    private void GetMember((string code, string desc) tuple)
+    {
+        message = tuple.desc;
+        //paginatedMemberItems = MemberService.GetMemeberItemsPaginated(tuple.code, memPageSize, memPageIndex);
+    }
+
+    private void DisplayExpiry(string expiry)
+    {
+        exp = expiry;
+    }
+
+
+
+
+}

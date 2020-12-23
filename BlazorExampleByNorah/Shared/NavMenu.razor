@@ -3,12 +3,6 @@
 <div class="page-wrapper chiller-theme toggled">
     <nav id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content">
-            <div class="sidebar-brand">
-                <a href="#">pro sidebar</a>
-                <div id="close-sidebar">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
             <div class="sidebar-menu">
                 <ul>
                     <li class="header-menu">
@@ -23,14 +17,21 @@
                     <li>
                         <NavLink href="CookieEx">CookieEx</NavLink>
                     </li>
-                    <li>
-                        <NavLink href="DBEx">DBEx</NavLink>
+                    <li class="sidebar-dropdown @DBSideBarCSS">
+                        <NavLink @onclick="ShowDBSideMenu">DBEx</NavLink>
+                        <div class="sidebar-submenu @DBSubMenuCSS">
+                            <ul>
+                                <li>
+                                    <NavLink href="DBEx/GetGroupList">Get Group List</NavLink>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <li>
                         <NavLink href="GenericEx">GenericEx</NavLink>
                     </li>
-                    <li class="sidebar-dropdown">
-                        <NavLink @onclick="ShowSideMenu">InputEx</NavLink>
+                    <li class="sidebar-dropdown @inputSideBarCSS">
+                        <NavLink @onclick="ShowInputSideMenu">InputEx</NavLink>
                         <div class="sidebar-submenu @inputSubMenuCSS">
                             <ul>
                                 <li>
@@ -73,12 +74,34 @@
     </nav>
 </div>
 
-@code {
-    private bool isShowForInputSubMenu = false;
-    private string inputSubMenuCSS => isShowForInputSubMenu ? "active display" : "hidden";
+@code { 
+    private bool isShowForDBSubMenu = false;
+    private string DBSubMenuCSS => setDisplay(isShowForDBSubMenu);
+    private string DBSideBarCSS => setActive(isShowForDBSubMenu);
 
-    protected void ShowSideMenu()
+    private bool isShowForInputSubMenu = false;
+    private string inputSubMenuCSS => setDisplay(isShowForInputSubMenu);
+    private string inputSideBarCSS => setActive(isShowForInputSubMenu);
+
+    #region Show Method
+    protected void ShowDBSideMenu()
+    {
+        isShowForDBSubMenu = !isShowForDBSubMenu;
+    }
+
+    protected void ShowInputSideMenu()
     {
         isShowForInputSubMenu = !isShowForInputSubMenu;
+    }
+    #endregion Show Method
+
+    protected string setDisplay(bool isShow)
+    {
+        return isShow ? "display" : "hidden";
+    }
+
+    protected string setActive(bool isShow)
+    {
+        return isShow ? "active" : string.Empty;
     }
 }
