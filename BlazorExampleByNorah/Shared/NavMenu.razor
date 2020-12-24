@@ -8,11 +8,11 @@
                     <li class="header-menu">
                         <span>Example</span>
                     </li>
-                    @*@foreach (var liItem in navServices.GetNavMenuService())
-        {
-            <NavComponent navMenu="@liItem"/>
-        }*@
-                    <li>
+                    @foreach (var liItem in navServices.GetNavMenuService())
+                    {
+                        <NavComponent navMenu="@liItem"/>
+                    }
+                    @*<li>
                         <NavLink href="AnimateEx">AnimateEx</NavLink>
                     </li>
                     <li class="sidebar-dropdown @ComponentSideBarCSS">
@@ -57,7 +57,7 @@
                         <NavLink href="GenericEx">GenericEx</NavLink>
                     </li>
                     <li>
-                        <NavLink href="GetFileListEx">GetFileListEx</NavLink>
+                        <NavLink href="/GetFileListEx/ProjectFoler">GetFileListEx</NavLink>
                     </li>
                     <li class="sidebar-dropdown @inputSideBarCSS">
                         <NavLink @onclick="ShowInputSideMenu">InputEx</NavLink>
@@ -95,7 +95,7 @@
                     </li>
                     <li>
                         <NavLink href="WebAPIEx">WebAPIEx</NavLink>
-                    </li>
+                    </li>*@
                 </ul>
             </div>
             <!-- sidebar-menu  -->
@@ -103,42 +103,43 @@
     </nav>
 </div>
 
-@code { 
+@code { /*
     private bool isShowForComponentSubMenu = false;
-            private string ComponentSubMenuCSS => setDisplay(isShowForComponentSubMenu);
-            private string ComponentSideBarCSS => setActive(isShowForComponentSubMenu);
+    private string ComponentSubMenuCSS => setDisplay(isShowForComponentSubMenu);
+    private string ComponentSideBarCSS => setActive(isShowForComponentSubMenu);
 
-            private bool isShowForDBSubMenu = false;
-            private string DBSubMenuCSS => setDisplay(isShowForDBSubMenu);
-            private string DBSideBarCSS => setActive(isShowForDBSubMenu);
+    private bool isShowForDBSubMenu = false;
+    private string DBSubMenuCSS => setDisplay(isShowForDBSubMenu);
+    private string DBSideBarCSS => setActive(isShowForDBSubMenu);
 
-            private bool isShowForInputSubMenu = false;
-            private string inputSubMenuCSS => setDisplay(isShowForInputSubMenu);
-            private string inputSideBarCSS => setActive(isShowForInputSubMenu);
+    private bool isShowForInputSubMenu = false;
+    private string inputSubMenuCSS => setDisplay(isShowForInputSubMenu);
+    private string inputSideBarCSS => setActive(isShowForInputSubMenu);
 
-            #region Show Method
-            protected void ShowComponentSideMenu()
-            {
-                isShowForComponentSubMenu = !isShowForComponentSubMenu;
-            }
+    #region Show Method
+    protected void ShowComponentSideMenu()
+    {
+        isShowForComponentSubMenu = !isShowForComponentSubMenu;
+    }
 
-            protected void ShowDBSideMenu()
-            {
-                isShowForDBSubMenu = !isShowForDBSubMenu;
-            }
+    protected void ShowDBSideMenu()
+    {
+        isShowForDBSubMenu = !isShowForDBSubMenu;
+    }
 
-            protected void ShowInputSideMenu()
-            {
-                isShowForInputSubMenu = !isShowForInputSubMenu;
-            }
-            #endregion Show Method
+    protected void ShowInputSideMenu()
+    {
+        isShowForInputSubMenu = !isShowForInputSubMenu;
+    }
+    #endregion Show Method
 
-            protected string setDisplay(bool isShow)
-            {
-                return isShow ? "display" : "hidden";
-            }
+    protected string setDisplay(bool isShow)
+    {
+        return isShow ? "display" : "hidden";
+    }
 
-            protected string setActive(bool isShow)
-            {
-                return isShow ? "active" : string.Empty;
-            } }
+    protected string setActive(bool isShow)
+    {
+        return isShow ? "active" : string.Empty;
+    } */
+    }
