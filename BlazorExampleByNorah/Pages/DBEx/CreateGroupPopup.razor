@@ -1,0 +1,151 @@
+﻿@page "/Group/Create"
+@*@attribute [Authorize]*@
+
+@inject IGroupService GroupService
+@inject NavigationManager NavigationManager
+
+<!-- Modal -->
+<EditForm Model="_item" OnValidSubmit="@Create_Click">
+    <DataAnnotationsValidator />
+    <div class="modal right" style="@display" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true" data-backdrop='false'>
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalPreviewLabel">Group 생성</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="(() => DisplayPopup(false))">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Code</label>
+                        <div class="col-sm-10">@_item.Code</div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">ID</label>
+                        <div class="col-sm-10">
+                            <InputText class="form-control" @bind-Value="_item.Id" />
+                            <ValidationMessage For="(() => _item.Id)" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Desc</label>
+                        <div class="col-sm-10">
+                            <InputText class="form-control" @bind-Value="_item.Desc" />
+                            <ValidationMessage For="(() => _item.Desc)" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Site</label>
+                        <div class="col-sm-10">
+                            <InputText class="form-control" @bind-Value="_item.Site" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Downlimit</label>
+                        <div class="col-sm-10">
+                            <InputNumber class="form-control" @bind-Value="_item.Downlimit" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Level</label>
+                        <div class="col-sm-10">
+                            <InputNumber class="form-control" @bind-Value="_item.Level" />
+                            <ValidationMessage For="(() => _item.Level)" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Pack</label>
+                        <div class="col-sm-10">
+                            @_item.Pack
+                            <InputText class="form-control" @bind-Value="_item.Pack" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Expiry</label>
+                        <div class="col-sm-10">
+                            <InputDate class="form-control" @bind-Value="_item.Expiry" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Svctype</label>
+                        <div class="col-sm-10">
+                            <InputText class="form-control" @bind-Value="_item.Svctype" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Colset</label>
+                        <div class="col-sm-10">
+                            <InputText class="form-control" @bind-Value="_item.Colset" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Online</label>
+                        <div class="col-sm-10">
+                            <InputText class="form-control" @bind-Value="_item.Online" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Creater</label>
+                        <div class="col-sm-10">
+                            <InputText class="form-control" @bind-Value="_item.Creater" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Memo</label>
+                        <div class="col-sm-10">
+                            <InputTextArea @bind-Value="_item.Memo" @onkeydown="TextArea_Keydown"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Create</button>
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+<!-- Modal -->
+
+
+
+
+@code {
+    [Parameter]
+    public bool isShow { get; set; }
+    private GroupItem _item = new GroupItem();
+    private string display => isShow? "display:block;" : "display:none;";
+
+    /*
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authenticationState = await AuthenticationStateTask;
+        _item = new GroupItem();
+
+        var authState = authenticationState;
+        var user = authState.User;
+        _item.Creater = user.Identity.Name;
+
+    }
+    */
+
+    private void Create_Click()
+    {
+        GroupService.CreateGroupItem(_item);
+        NavigationManager.NavigateTo("/Group");
+    }
+
+    private void TextArea_Keydown()
+    {
+    }
+
+    public void DisplayPopup(bool tobe)
+    {
+        isShow = tobe;
+        StateHasChanged();
+    }
+}
