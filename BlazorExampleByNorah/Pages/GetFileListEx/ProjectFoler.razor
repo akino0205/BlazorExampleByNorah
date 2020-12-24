@@ -1,0 +1,63 @@
+﻿@page "/GetFileListEx/ProjectFoler"
+@using System.IO
+
+<h3>GetFileListEx</h3>
+<h4>repositoryPath : @repositoryPath</h4>
+@foreach (string str in dirs)
+{
+    @str
+    <br />
+}
+<h4>solutionPath : @solutionPath</h4>
+<h4>projectPath1 : @projectPath1</h4>
+<h4>projectPath2 : @projectPath2</h4>
+
+<h4>Page list : @pageFolderPath</h4>
+<h4>Fullpath</h4>
+@foreach (string str in pageFolderList)
+{
+    @str
+    <br />
+}
+
+<h4>Folder Name</h4>
+@foreach (string str in pageFolderNames)
+{
+    @str
+    <br />
+}
+
+@code {
+    private string repositoryPath;
+    private List<string> dirs;
+    private string solutionPath;
+    private string projectPath1;
+    private string projectPath2;
+    private bool pageFolderPathIsExist;
+    private string pageFolderPath;
+
+    private List<string> pageFolderList;
+    private List<string> pageFolderNames;
+    private List<bool> hasMultiFiles;
+    private List<bool> hasMultiFolders;
+
+    protected override void OnInitialized()
+    {
+        repositoryPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
+        dirs = new List<string>(Directory.EnumerateDirectories(repositoryPath));
+
+        pageFolderPath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+
+        projectPath1 = Environment.CurrentDirectory;
+        projectPath2 = Directory.GetCurrentDirectory();
+
+        pageFolderPathIsExist = Directory.Exists($"{ Directory.GetCurrentDirectory()}\\Pages");
+        pageFolderPath = $"{ Directory.GetCurrentDirectory()}\\Pages";
+        pageFolderList = new List<string>(Directory.EnumerateDirectories(pageFolderPath));
+        pageFolderNames = pageFolderList.Select(path => path.Replace(pageFolderPath, "").Split('\\')[1]).ToList();
+        hasMultiFiles = pageFolderList.Select(folder => Directory.GetFiles(folder).Length > 1).ToList();
+        hasMultiFolders = pageFolderList.Select(folder => Directory.GetDirectories(folder).Length > 1).ToList();
+    }
+
+
+}
