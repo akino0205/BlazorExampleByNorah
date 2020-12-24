@@ -2,18 +2,19 @@
 @inject IGroupService GroupService
 
 <h2>DBEx - Get Group List</h2>
-<button class="btn-primary" type="button" @onclick="ShowCreatePopup">Group 생성</button>
-<button class="btn-primary" type="button">Group 만료</button>
 @if (paginatedGroupItems == null || paginatedGroupItems.Data == null || !paginatedGroupItems.Data.Any())
 {
+
     <table class="list_contentTable">
         <tr>
             <td>No data was returned.</td>
         </tr>
     </table>
+
 }
 else
 {
+
     <table class="table">
         <colgroup>
             <col style="width: 200px;" />
@@ -54,11 +55,9 @@ else
             }
         </tbody>
     </table>
-}
-<BlazorExampleByNorah.Pages.DBEx.CreateGroupPopup @ref="_createPopup"/>
 
+}
 @code {
-    #region Group List
     int pageSize = 5;
     int pageIndex = 0;
 
@@ -87,13 +86,8 @@ else
     {
         exp = expiry;
     }
-    #endregion Group List
 
-    #region CreatePopup
-    private CreateGroupPopup _createPopup;
-    protected void ShowCreatePopup()
-    {
-        _createPopup.DisplayPopup(true);
-    }
-    #endregion CreatePopup
+
+
+
 }
