@@ -1,0 +1,141 @@
+﻿@page "/InputEx/ValidInputForm"
+@inject NavigationManager navigatoinManager
+@*
+    https://docs.microsoft.com/ko-kr/aspnet/core/blazor/components/data-binding?view=aspnetcore-5.0
+*@
+<div style="width: 50%; display: inline-block;">
+    <h3>BasicInputForm</h3>
+    <EditForm Model="model" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label>hidden</label>
+            <input type="hidden" @bind="model.inputHidden" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Phone</label>
+            <input type="text" @bind="model.inputTextStr" class="form-control" />
+            <ValidationMessage For="() => model.inputTextStr" />
+            <label>EmailAddress</label>
+            <InputText @bind-Value="model.inputTextStr2" class="form-control" />
+            <ValidationMessage For="() => model.inputTextStr2" />
+        </div>
+        <div class="form-group">
+            <label>input number</label>
+            <input type="number" @bind="model.inputTextInt" @bind:event="oninput" class="form-control" />
+            <ValidationMessage For="() => model.inputTextInt" />
+            <label>InputNumber</label>
+            <InputNumber @bind-Value="model.inputTextInt2" class="form-control" />
+            <ValidationMessage For="() => model.inputTextInt2" />
+        </div>
+        <div class="form-group">
+            <label>input date</label>
+            <input type="date" @bind="model.inputTextDate" @bind:format="yyyy-MM-dd" class="form-control" />
+            <ValidationMessage For="() => model.inputTextDate" />
+            <label>InputDate text Date</label>
+            <InputDate @bind-Value="model.inputTextDate2" class="form-control" />
+            <ValidationMessage For="() => model.inputTextDate2" />
+        </div>
+        <div class="form-group">
+            <label>input password</label>
+            <input type="password" @bind="model.inputPassword" class="form-control" />
+            <ValidationMessage For="() => model.inputPassword" />
+        </div>
+        <div class="form-group">
+            <label>textarea</label>
+            <textarea @bind="model.textArea" class="form-control"></textarea>
+            <ValidationMessage For="() => model.textArea" />
+            <label>InputTextarea</label>
+            <InputTextArea @bind-Value="model.textArea2" class="form-control" />
+            <ValidationMessage For="() => model.textArea2" />
+        </div>
+        <div class="form-group">
+            <label>checkbox</label>
+            <input type="checkbox" @bind="model.isChecked" />
+            <ValidationMessage For="() => model.isChecked" />
+            <InputCheckbox @bind-Value="model.isChecked2" />
+            <ValidationMessage For="() => model.isChecked2" />
+        </div>
+        <div class="form-group">
+            <label>radio</label>
+            @foreach (var radioitem in radios)
+            {
+                <input type="radio" name="itemRadio" checked="@(model.checkedRadio == radioitem.Value)"
+                       @onchange="(() => model.checkedRadio = radioitem.Value)" />@radioitem.Text
+                }
+            <ValidationMessage For="() => model.checkedRadio" />
+        </div>
+        <div class="form-group">
+            <label>select option</label>
+            <select @bind="model.selectedSelection" class="form-control">
+                @foreach (var option in options)
+                {
+                    <option value="@option.Value">@option.Text</option>
+                }
+            </select>
+            <ValidationMessage For="() => model.selectedSelection" />
+            <InputSelect @bind-Value="model.selectedSelection2" class="form-control">
+                @foreach (var option in options)
+                {
+                    <option value="@option.Value">@option.Text</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="() => model.selectedSelection2" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-warning" @onclick="OnClickCancelBtn">Cancel</button>
+    </EditForm>
+</div>
+
+@if(isSubmit) 
+{
+    <div style="display: inline-block; vertical-align: top; padding-left: 40px;">
+        <ValidInputResult model="@model" />
+        <button type="button" @onclick="RestartInputForm" class="btn btn-danger">Restart</button>
+    </div>
+}
+
+@code {
+    private bool isSubmit;
+    private ValidInputModel model = new ValidInputModel()
+    {
+        inputHidden = "initValue",
+        inputTextDate = DateTime.Now,
+        checkedRadio = "1",
+    };
+
+    SelectModel[] options = new[]
+    {
+        new SelectModel { Value="", Text="Select classification ..." },
+        new SelectModel { Value="Exploration", Text="Exploration" },
+        new SelectModel { Value="Diplomacy", Text="Diplomacy" },
+        new SelectModel { Value="Defense", Text="Defense" },
+    };
+
+    RadioModel[] radios = new[]
+    {
+        new RadioModel {Value= "1", Text="1"},
+        new RadioModel {Value= "2", Text="2"},
+        new RadioModel {Value= "3", Text="3"},
+    };
+
+    private void HandleValidSubmit()
+    {
+        StateHasChanged();
+        isSubmit = true;
+    }
+
+    private void OnClickCancelBtn()
+    {
+        model = new ValidInputModel()
+        {
+            inputHidden = "initValue",
+            inputTextDate = DateTime.Now,
+        };
+    }
+    private void RestartInputForm()
+    {
+        isSubmit = false;
+        OnClickCancelBtn();
+    }
+}

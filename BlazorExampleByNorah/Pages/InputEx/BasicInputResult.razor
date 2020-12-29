@@ -1,0 +1,85 @@
+﻿@page "/InputEx/BasicInputResult"
+@inject NavigationManager navigatoinManager
+
+@if (model == null)
+{
+    <button style="margin: 40%;" type="button"  
+            @onclick="MoveToForm" class="btn btn-warning btn-lg ">
+        Execute BasicInputForm!
+    </button>
+}
+else
+{
+    <h2>Result</h2>
+    <table class="table">
+        <tr>
+            <th>model.inputHidden</th>
+            <td>@model.inputHidden</td>
+        </tr>
+        <tr>
+            <th>model.inputTextStr</th>
+            <td>@model.inputTextStr</td>
+        </tr>
+        <tr>
+            <th>model.inputTextStr2</th>
+            <td>@model.inputTextStr2</td>
+        </tr>
+        <tr>
+            <th>model.inputTextInt</th>
+            <td>@model.inputTextInt</td>
+        </tr>
+        <tr>
+            <th>model.inputTextInt2</th>
+            <td>@model.inputTextInt2</td>
+        </tr>
+        <tr>
+            <th>model.inputTextDate</th>
+            <td>@model.inputTextDate.ToLongDateString()</td>
+        </tr>
+        <tr>
+            <th>model.inputTextDate2</th>
+            <td>@model.inputTextDate2.ToShortDateString()</td>
+        </tr>
+        <tr>
+            <th>model.inputPassword</th>
+            <td>@model.inputPassword</td>
+        </tr>
+        <tr>
+            <th>model.textArea</th>
+            <td>@model.textArea</td>
+        </tr>
+        <tr>
+            <th>model.textArea2</th>
+            <td>@model.textArea2</td>
+        </tr>
+        <tr>
+            <th>model.isChecked</th>
+            <td>@model.isChecked</td>
+        </tr>
+        <tr>
+            <th>model.isChecked2</th>
+            <td>@model.isChecked2</td>
+        </tr>
+        <tr>
+            <th>model.checkedRadio</th>
+            <td>@model.checkedRadio</td>
+        </tr>
+        <tr>
+            <th>model.selectedSelection</th>
+            <td>@model.selectedSelection</td>
+        </tr>
+        <tr>
+            <th>model.selectedSelection2</th>
+            <td>@model.selectedSelection2</td>
+        </tr>
+    </table>
+}
+@code {
+    [Parameter]
+    public BasicInputModel model { get; set; }
+
+    private void MoveToForm()
+    {
+        navigatoinManager.NavigateTo("/InputEx/ValidInputForm");
+    }
+}

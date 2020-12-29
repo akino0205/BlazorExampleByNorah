@@ -1,0 +1,126 @@
+﻿@page "/InputEx/BasicInputForm"
+@inject NavigationManager navigatoinManager
+@*
+    https://docs.microsoft.com/ko-kr/aspnet/core/blazor/components/data-binding?view=aspnetcore-5.0
+*@
+<div style="width: 50%; display: inline-block;">
+    <h3>BasicInputForm</h3>
+    <EditForm Model="model" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label>hidden</label>
+            <input type="hidden" @bind="model.inputHidden" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>input text string</label>
+            <input type="text" @bind="model.inputTextStr" class="form-control" />
+            <label>InputText</label>
+            <InputText @bind-Value="model.inputTextStr2" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>input number</label>
+            <input type="number" @bind="model.inputTextInt" @bind:event="oninput" class="form-control" />
+            <label>InputNumber</label>
+            <InputNumber @bind-Value="model.inputTextInt2" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>input date</label>
+            <input type="date" @bind="model.inputTextDate" @bind:format="yyyy-MM-dd" class="form-control" />
+            <label>InputDate text Date</label>
+            <InputDate @bind-Value="model.inputTextDate2" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>input password</label>
+            <input type="password" @bind="model.inputPassword" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>textarea</label>
+            <textarea @bind="model.textArea" class="form-control"></textarea>
+            <label>InputTextarea</label>
+            <InputTextArea @bind-Value="model.textArea2" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>checkbox</label>
+            <input type="checkbox" @bind="model.isChecked" />
+            <InputCheckbox @bind-Value="model.isChecked2" />
+        </div>
+        <div class="form-group">
+            <label>radio</label>
+            @foreach (var radioitem in radios)
+            {
+                <input type="radio" name="itemRadio" checked="@(model.checkedRadio == radioitem.Value)"
+                       @onchange="(() => model.checkedRadio = radioitem.Value)" />@radioitem.Text
+                }
+        </div>
+        <div class="form-group">
+            <label>select option</label>
+            <select @bind="model.selectedSelection" class="form-control">
+                @foreach (var option in options)
+                {
+                    <option value="@option.Value">@option.Text</option>
+                }
+            </select>
+            <InputSelect @bind-Value="model.selectedSelection2" class="form-control">
+                @foreach (var option in options)
+                {
+                    <option value="@option.Value">@option.Text</option>
+                }
+            </InputSelect>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-warning" @onclick="OnClickCancelBtn">Cancel</button>
+    </EditForm>
+</div>
+
+@if (isSubmit)
+{
+    <div style="display: inline-block; vertical-align: top; padding-left: 40px;">
+        <BasicInputResult model="@model" />
+        <button type="button" @onclick="RestartInputForm" class="btn btn-danger">Restart</button>
+    </div>
+}
+
+@code {
+    private bool isSubmit;
+    private BasicInputModel model = new BasicInputModel()
+    {
+        inputHidden = "initValue",
+        inputTextDate = DateTime.Now,
+        checkedRadio = "1",
+    };
+
+    SelectModel[] options = new[]
+    {
+        new SelectModel { Value="", Text="Select classification ..." },
+        new SelectModel { Value="Exploration", Text="Exploration" },
+        new SelectModel { Value="Diplomacy", Text="Diplomacy" },
+        new SelectModel { Value="Defense", Text="Defense" },
+    };
+
+    RadioModel[] radios = new[]
+    {
+        new RadioModel {Value= "1", Text="1"},
+        new RadioModel {Value= "2", Text="2"},
+        new RadioModel {Value= "3", Text="3"},
+    };
+
+    private void HandleValidSubmit()
+    {
+        isSubmit = true;
+    }
+
+    private void OnClickCancelBtn()
+    {
+        model = new BasicInputModel()
+        {
+            inputHidden = "initValue",
+            inputTextDate = DateTime.Now,
+            checkedRadio = "1",
+        };
+    }
+    private void RestartInputForm()
+    {
+        isSubmit = false;
+        OnClickCancelBtn();
+    }
+}
