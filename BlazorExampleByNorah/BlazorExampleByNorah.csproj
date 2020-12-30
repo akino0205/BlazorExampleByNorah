@@ -5,12 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Data\NewFolder\" />
     <Folder Include="Pages\LogEx\" />
     <Folder Include="Pages\CookieEx\" />
-    <Folder Include="Pages\JsonEx\" />
     <Folder Include="Pages\DIEx\" />
     <Folder Include="Pages\GenericEx\" />
     <Folder Include="Pages\AnimateEx\" />
+    <Folder Include="Pages\XmlEx\" />
     <Folder Include="Pages\OptionPatternEx\" />
     <Folder Include="Pages\SettingsEx\" />
     <Folder Include="Pages\SessionEx\" />

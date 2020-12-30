@@ -1,0 +1,31 @@
+﻿@page "/PagingEx/Index"
+<h3>
+    TotalItems :
+    <input type="number" @bind="totalItems" />
+</h3>
+<button type="button" @onclick="SetTotalItems">SetTotalItems</button>
+
+<hr />
+<BlazorExampleByNorah.Pages.PagingEx.Component TotalItems="@totalItems"
+                                               CurrentPage="@currentPage"
+                                               PageSize="@pageSize"
+                                               MaxPages="@maxPages"
+                                               PageChanged=@PagerPageChanged />
+
+@code {
+    private int totalItems = 123;
+    private int currentPage = 1;
+    private int pageSize = 20;
+    private int maxPages = 10;
+
+    private bool successSearch = true;
+
+    protected void PagerPageChanged(int page)
+    {
+        currentPage = page;
+    }
+
+    private void SetTotalItems()
+    {
+    }
+}

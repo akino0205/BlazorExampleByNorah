@@ -1,0 +1,122 @@
+﻿@page "/PagingEx/Component"
+
+<h4>TotalItems is @TotalItems</h4>
+@for (var i = startIndex; i <= endIndex; i++)
+{
+    @i
+    <br />
+}
+<h4>PageArea</h4>
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+        @if (TotalItems > 1)
+        {
+            <ul class="pagination pull-right">
+                @if (startPage != 1)
+                {
+                    <li><button @onclick="(() => PagerButtonClicked(maxPagesBeforeCurrentPage))" class="btn">&laquo;</button></li>
+                }
+                @for (var i = startPage; i <= endPage; i++)
+                {
+                    var pageNumber = i;
+                    @if (i == CurrentPage)
+                    {
+                        <li><span class="btn btn-primary">@i</span></li>
+                    }
+                    else
+                    {
+                        <li><button @onclick="(() => PagerButtonClicked(pageNumber))" class="btn">@i</button></li>
+                    }
+                }
+                @if (endPage != totalPages)
+                {
+                    <li><button @onclick="(() => PagerButtonClicked(maxPagesAfterCurrentPage))" class="btn">&raquo;</button></li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+@code {
+    [Parameter]
+    public int TotalItems { get; set; }
+    [Parameter]
+    public int CurrentPage { get; set; }
+    [Parameter]
+    public int PageSize { get; set; }
+    [Parameter]
+    public int MaxPages { get; set; }
+    [Parameter]
+    public EventCallback<int> PageChanged { get; set; }
+
+    private int startPage, endPage;
+    private int totalPages;
+    private int maxPagesBeforeCurrentPage;
+    private int maxPagesAfterCurrentPage;
+    private int startIndex;
+    private int endIndex;
+    private IEnumerable<int> pages;
+
+    protected override void OnParametersSet()
+    {
+        SetPage();
+    }
+
+    protected void PagerButtonClicked(int page)
+    {
+        PageChanged.InvokeAsync(page);
+    }
+
+    protected void SetPage()
+    {
+        totalPages = (int)Math.Ceiling((decimal)TotalItems / (decimal)PageSize);
+
+        // ensure current page isn't out of range
+        if (CurrentPage < 1)
+        {
+            CurrentPage = 1;
+        }
+        else if (CurrentPage > totalPages)
+        {
+            CurrentPage = totalPages;
+        }
+
+
+        if (totalPages <= MaxPages)
+        {
+            // total pages less than max so show all pages
+            startPage = 1;
+            endPage = totalPages;
+        }
+        else
+        {
+            // total pages more than max so calculate start and end pages
+            maxPagesBeforeCurrentPage = (int)Math.Floor((decimal)MaxPages / (decimal)2);
+            maxPagesAfterCurrentPage = (int)Math.Ceiling((decimal)MaxPages / (decimal)2) - 1;
+            if (CurrentPage <= maxPagesBeforeCurrentPage)
+            {
+                // current page near the start
+                startPage = 1;
+                endPage = MaxPages;
+            }
+            else if (CurrentPage + maxPagesAfterCurrentPage >= totalPages)
+            {
+                // current page near the end
+                startPage = totalPages - MaxPages + 1;
+                endPage = totalPages;
+            }
+            else
+            {
+                // current page somewhere in the middle
+                startPage = CurrentPage - maxPagesBeforeCurrentPage;
+                endPage = CurrentPage + maxPagesAfterCurrentPage;
+            }
+        }
+
+        // calculate start and end item indexes
+        startIndex = (CurrentPage - 1) * PageSize;
+        endIndex = Math.Min(startIndex + PageSize - 1, TotalItems - 1);
+
+        //create an array of pages that can be looped over
+        //pages = Enumerable.Range(startPage, (endPage + 1) - startPage);
+    }
+}
