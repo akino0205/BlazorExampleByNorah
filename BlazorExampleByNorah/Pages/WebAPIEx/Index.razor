@@ -1,0 +1,39 @@
+﻿@page "/WebAPIEx"
+@inject AuthenticationService service
+
+<h3>Index</h3>
+<EditForm Model="Input" OnValidSubmit="@HandleValidSubmit" class="p-5">
+    <DataAnnotationsValidator />
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="user-id">User id</span>
+        <input type="text" @bind="Input.UserId" class="form-control" placeholder="아이디 입력" aria-describedby="user-id1">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="user-password">User password</span>
+        <input type="password" @bind="Input.Password" class="form-control" placeholder="비밀번호 입력" aria-describedby="user-password">
+    </div>
+    <div class="input-group mb-3">
+        <label class="input-group-text" for="user-service">Site name</label>
+        <select class="form-select" @bind="Input.SiteName" id="user-service">
+            @foreach (var siteName in Enum.GetNames(typeof(WisdomainSitename)))
+            {
+                <option value="@siteName">@siteName</option>
+            }
+        </select>
+    </div>
+    <div class="d-grid gap-2">
+        <button class="btn btn-outline-primary" type="submit" @onclick="HandleValidSubmit">로그인 및 토큰 발급</button>
+    </div>
+</EditForm>
+<h4>token : @token</h4>
+@code {
+    public WisdomainLoginForm Input = new WisdomainLoginForm()
+    {
+        SiteName = "SVCWD_SITE1"
+    };
+    private TokenSet token;
+    private async Task HandleValidSubmit()
+    {
+        token = await service.LoginAndGetTokenSet(Input);
+    }
+}

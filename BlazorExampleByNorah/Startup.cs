@@ -24,6 +24,9 @@ namespace BlazorExampleByNorah
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            
+            //NavMenu
+            services.AddScoped<NavMenuService>();
 
             //ComponentEx
             services.AddScoped<AppStateForComponent>();
@@ -36,8 +39,9 @@ namespace BlazorExampleByNorah
             //SettingsEx
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            //NavMenu
-            services.AddScoped<NavMenuService>();
+            //WebAPIEx
+            services.Configure<AuthenticationSettings>(Configuration.GetSection("AuthenticationSettings"));
+            services.AddScoped<AuthenticationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
