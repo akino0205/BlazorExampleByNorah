@@ -1,0 +1,73 @@
+﻿@page  "/InputEx/CheckAll"
+@*
+    checkbox style
+    https://lokesh-coder.github.io/pretty-checkbox/
+*@
+<link href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" rel="stylesheet">
+
+<h3>CheckAll</h3>
+<h3 class="h4 dark-grey-text mb-4">CheckAll - Area1</h3>
+<div class="pretty p-default" style=" display: block; margin: 5px;">
+    <input type="checkbox" id="allCheckbox" @bind="@allChecked" @onclick="CheckAllArea1">
+    <div class="state @checkboxStyleArr[0]">
+        <label for="allCheckbox">CheckAll</label>
+    </div>
+</div>
+@foreach (var item in checkboxes)
+{
+<div style="display: block;margin: 5px;">
+    <div class="pretty p-default">
+        <input type="checkbox" @bind="@item.isChecked" id="@item.Value" disabled="@item.isDisable" @onclick="(() => CancelACheckboxInArea1(item))">
+        <div class="state @item.checkboxStyle">
+            <label for="@item.Value">@item.Text</label>
+        </div>
+    </div>
+    <div class="pretty p-switch p-fill" @onclick="(() => SetDisable(item))">
+        <input type="checkbox" />
+        <div class="state">
+            <label>SetDisable</label>
+        </div>
+    </div>
+</div>
+}
+@code {
+    private bool allChecked;
+    private bool allChecked2;
+    private List<CheckboxModel> checkboxes;
+    private List<CheckboxModel> checkboxes2;
+    private string[] checkboxStyleArr = { "p-primary", "p-success", "p-info", "p-warning", "p-danger" };
+    protected override void OnInitialized()
+    {
+        checkboxes = new List<CheckboxModel>();
+        checkboxes2 = new List<CheckboxModel>();
+        for (int i = 1; i <= 10; i++)
+        {
+            var checkbox = new CheckboxModel();
+            checkbox.Value = $"value{i}";
+            checkbox.Text = $"checkbox_number{i}";
+            checkbox.isChecked = false;
+            checkbox.isDisable = false;
+            checkbox.checkboxStyle = checkboxStyleArr[i % 5];
+            checkboxes.Add(checkbox);
+            checkboxes2.Add(checkbox);
+        }
+    }
+    protected void CheckAllArea1()
+    {
+        foreach (var item in checkboxes)
+        {
+            if (!item.isDisable)
+                item.isChecked = !(bool)allChecked;
+        }
+    }
+
+    protected void CancelACheckboxInArea1(CheckboxModel item)
+    {
+        if (item.isChecked && allChecked) allChecked = false;
+    }
+
+    protected void SetDisable(CheckboxModel item)
+    {
+        item.isDisable = !item.isDisable;
+    }
+}
