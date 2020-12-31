@@ -41,6 +41,7 @@
         </div>
         <div class="form-group">
             <label>checkbox</label>
+            <input type="checkbox" @bind="isChecked" />
             <input type="checkbox" @bind="model.isChecked" />
             <InputCheckbox @bind-Value="model.isChecked2" />
         </div>
@@ -54,13 +55,13 @@
         </div>
         <div class="form-group">
             <label>select option</label>
-            <select @bind="model.selectedSelection" class="form-control">
+            <select @bind="model.selectedSelection" class="form-select">
                 @foreach (var option in options)
                 {
                     <option value="@option.Value">@option.Text</option>
                 }
             </select>
-            <InputSelect @bind-Value="model.selectedSelection2" class="form-control">
+            <InputSelect @bind-Value="model.selectedSelection2" class="form-select">
                 @foreach (var option in options)
                 {
                     <option value="@option.Value">@option.Text</option>
@@ -81,6 +82,8 @@
 }
 
 @code {
+    private bool isChecked = true;
+    private bool isChecked2 = true;
     private bool isSubmit;
     private BasicInputModel model = new BasicInputModel()
     {

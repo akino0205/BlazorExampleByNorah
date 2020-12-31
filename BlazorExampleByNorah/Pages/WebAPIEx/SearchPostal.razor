@@ -1,0 +1,41 @@
+﻿@page "/WebAPIEx/SearchPostal"
+@using Microsoft.AspNetCore.Http.Extensions
+@inject PostalSearchService service
+
+<h3>우편번호 검색</h3>
+<EditForm Model="param" OnValidSubmit="@HandleValidSubmit">
+    <input type="text" @bind="param.searchWord" class="form-control" />
+    <input type="hidden" @bind="param.countPerPage">
+</EditForm>
+@if (successSearch)
+{
+    <BlazorExampleByNorah.Pages.PagingEx.Component TotalItems="@totalItems"
+                                                   CurrentPage="@param.currentPage"
+                                                   PageSize="@param.countPerPage"
+                                                   MaxPages="@maxPages"
+                                                   PageChanged=@PagerPageChanged />
+}
+
+@code {
+    private PostalParam param = new PostalParam()
+    {
+        countPerPage = 20,
+        currentPage = 1
+    };
+
+    private bool successSearch = true;
+    private int totalItems;
+    private int maxPages;
+
+    protected void PagerPageChanged(int page)
+    {
+        param.currentPage = page;
+        var json = service.SearchPostal(param);
+    }
+
+    private void HandleValidSubmit()
+    {
+        var json = service.SearchPostal(param);
+    }
+
+}
