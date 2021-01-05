@@ -222,6 +222,54 @@ app {
     content: "Browse";
 }
 
+.file-label::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    display: block;
+    height: calc(calc(2.25rem + 2px) - 1px * 2);
+    padding: .375rem .75rem;
+    line-height: 1.5;
+    color: #495057;
+    content: "Browse";
+    background-color: #e9ecef;
+    border-left: 1px solid #ced4da;
+    border-radius: 0 .25rem .25rem 0;
+}
+
 ::after, ::before {
     box-sizing: border-box;
+}
+
+/*file drag and drop*/
+.dropArea {
+    border: 2px dashed steelblue;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightblue;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: relative;
+    min-height: 200px;
+}
+
+    .dropArea:hover {
+        background-color: lightskyblue;
+        color: #333;
+    }
+
+    .dropArea input[type=file] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+.dropAreaDrug {
+    background-color: lightseagreen;
 }
