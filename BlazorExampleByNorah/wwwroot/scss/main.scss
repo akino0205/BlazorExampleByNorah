@@ -1,0 +1,11 @@
+@import "base/reset";
+@import "components/common";
+
+/* main */
+#skipNav{
+    li{
+        float: left;
+        background: pink;
+        margin-right: 10px;
+    }
+}
