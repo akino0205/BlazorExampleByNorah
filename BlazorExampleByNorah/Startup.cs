@@ -36,6 +36,9 @@ namespace BlazorExampleByNorah
             services.AddScoped<IGroupService, GroupService>();
             services.AddTransient<HttpClient>();
 
+            //FileEx
+            services.AddScoped<FileService>();
+
             //SettingsEx
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 

@@ -1,0 +1,44 @@
+﻿@page "/FileEx/ConfirmSingleFile"
+@using System.IO
+
+<h3>ConfirmSingleFile</h3>
+<p>A single file input that uploads automatically on file selection</p>
+<div class="file-div">
+    <label for="formFileLg" class="file-label">@status</label>
+    <InputFile OnChange="OnInputFileChange" class="file-input" id="formFileLg" />
+</div>
+<hr />
+@if (file != null)
+{
+    <h4>File Name : @file.Name</h4>
+    <br />
+    <b>Size:</b> @file.Size
+    <br />
+    <b>LastModified:</b> @file.LastModified
+    <br />
+    <b>Type:</b> @file.ContentType;
+    <br />
+}
+
+@* 참고사이트 https://romansimuta.com/posts/drag-and-drop-file-uploading-with-net-5-0-blazor-inputfile-component/ *@
+@code {
+    IBrowserFile file;
+    string status = "No file selected";
+
+    private void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            if (e.FileCount > 0)
+            {
+                file = e.File;
+                status = "A file Selected";
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.Message);
+            throw;
+        }
+    }
+}

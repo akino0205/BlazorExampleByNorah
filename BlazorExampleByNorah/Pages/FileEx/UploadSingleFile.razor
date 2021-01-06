@@ -1,0 +1,42 @@
+﻿@page "/FileEx/UploadSingleFile"
+@using System.IO
+@inject FileService service
+
+<h3>UploadSingleFile</h3>
+<p>A single file input that uploads automatically on file selection</p>
+<div class="file-div">
+    <label for="formFileLg" class="file-label">@status</label>
+    <InputFile OnChange="OnInputFileChange" class="file-input" id="formFileLg" />
+</div>
+<hr />
+@if (url != null)
+{
+    <label>File Name : @file.Name</label>
+    <br />
+    <a href="@url" download>@url</a>
+}
+
+@* 참고사이트 https://romansimuta.com/posts/drag-and-drop-file-uploading-with-net-5-0-blazor-inputfile-component/ *@
+@code {
+    IBrowserFile file;
+    string status = "No file selected";
+    string url;
+
+    async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            if (e.FileCount > 0)
+            {
+                file = e.File;
+                url = await service.SaveFile(e.File);
+                status = "A file Selected";
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.Message);
+            throw;
+        }
+    }
+}

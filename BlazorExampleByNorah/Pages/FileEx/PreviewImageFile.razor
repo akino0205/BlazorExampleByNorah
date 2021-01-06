@@ -3,14 +3,15 @@
 <h3>Upload PNG images</h3>
 
 <div class="file-div">
-    <label for="formFileLg" class="file-label">Example file image upload</label>
+    <label for="formFileLg" class="file-label">Example file image upload(.jpg, .jpeg, .png)</label>
     <InputFile OnChange="@OnInputFileChange" multiple class="file-input" accept=".jpg, .jpeg, png" />
 </div>
 
 @if (imageDataUrls.Count > 0)
 {
     <h4>선택된 이미지</h4>
-
+    <br />
+    
     <div class="card" style="width:30rem;">
         <div class="card-body">
             @foreach (var imageDataUrl in imageDataUrls)
@@ -18,27 +19,22 @@
                 <img class="rounded m-1" src="@imageDataUrl" />
             }
         </div>
-        @*<div class="card-body">
-            @foreach (var imageDataUrl in imageDataUrls)
-            {
-                @imageDataUrl
-            }
-        </div>*@
     </div>
 }
 
 @code {
     private IList<string> imageDataUrls = new List<string>();
+    private IReadOnlyList<IBrowserFile> files;
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
-        var maxAllowedFiles = 3;
+        var maxAllowedFiles = 12;
         var format = "image/png";
-        
-        foreach (var imageFile in e.GetMultipleFiles(maxAllowedFiles))
+        files = e.GetMultipleFiles(maxAllowedFiles);
+        foreach (var imageFile in files)
         {
             var resizedImageFile = await imageFile.RequestImageFileAsync(format,
-                200, 200);
+                100, 100);
             var buffer = new byte[resizedImageFile.Size];
             await resizedImageFile.OpenReadStream().ReadAsync(buffer);
             var imageDataUrl =

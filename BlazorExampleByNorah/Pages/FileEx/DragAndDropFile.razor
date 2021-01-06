@@ -1,0 +1,81 @@
+﻿@page "/FileEx/DragAndDropFile"
+@using System.IO
+@inject FileService service
+
+<h3>DragAndDropFile</h3>
+<p>A single file input that uploads automatically on file selection</p>
+<div class="file-div">
+    <label for="formFileLg" class="file-label">Example file input</label>
+    <InputFile class="file-input" id="formFileLg"
+               OnChange="OnInputFileChange"
+               multiple />
+</div>
+<div class="dropArea @dropClass">
+    Drag and drop your files here or click to open file loading dialogue...
+    <InputFile id="inputDrop"
+               OnChange="OnInputFileChange"
+               @ondragenter="HandleDragEnter"
+               @ondragleave="HandleDragLeave"
+               multiple />
+</div>
+
+@if (files != null && files.Count > 1)
+{
+    <div>
+        <ul>
+            @foreach (var file in files)
+            {
+                <li>File Name : @file.Name</li>
+            }
+        </ul>
+    </div>
+}
+@if (urls.Count > 0)
+{
+    foreach (var url in urls)
+    {
+        <br />
+        <a href="@url" download>@url</a>
+    }
+}
+
+@* 참고사이트 https://romansimuta.com/posts/drag-and-drop-file-uploading-with-net-5-0-blazor-inputfile-component/ *@
+@code {
+    IReadOnlyList<IBrowserFile> files;
+    List<string> urls = new List<string>();
+    string dropClass = string.Empty;
+    const int maxFileSize = 10485760;
+    private void HandleDragEnter()
+    {
+        dropClass = "dropAreaDrug";
+    }
+    private void HandleDragLeave()
+    {
+        dropClass = string.Empty;
+    }
+    async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        dropClass = string.Empty;
+        try
+        {
+            if (e.FileCount > 1)
+            {
+                files = e.GetMultipleFiles();
+                urls.Clear();
+                urls.AddRange(await service.SaveFiles(files));
+            }
+            else
+            {
+                files = null;
+                var url = await service.SaveFile(e.File);
+                urls.Clear();
+                urls.Add(url);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.Message);
+            throw;
+        }
+    }
+}
