@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorExampleByNorah", "BlazorExampleByNorah\BlazorExampleByNorah.csproj", "{7F98D8DF-5F8D-413F-A567-BAD27E1C571E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadzenBlazorExample", "RadzenBlazorExample\RadzenBlazorExample.csproj", "{A339DF11-91C2-4A12-9DA2-32881FC648C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncfusionBlazorExample", "SyncfusionBlazorExample\SyncfusionBlazorExample.csproj", "{3984E60E-CC15-455C-962A-6D31841C48B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{7F98D8DF-5F8D-413F-A567-BAD27E1C571E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F98D8DF-5F8D-413F-A567-BAD27E1C571E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F98D8DF-5F8D-413F-A567-BAD27E1C571E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A339DF11-91C2-4A12-9DA2-32881FC648C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A339DF11-91C2-4A12-9DA2-32881FC648C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A339DF11-91C2-4A12-9DA2-32881FC648C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A339DF11-91C2-4A12-9DA2-32881FC648C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3984E60E-CC15-455C-962A-6D31841C48B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3984E60E-CC15-455C-962A-6D31841C48B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3984E60E-CC15-455C-962A-6D31841C48B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3984E60E-CC15-455C-962A-6D31841C48B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
