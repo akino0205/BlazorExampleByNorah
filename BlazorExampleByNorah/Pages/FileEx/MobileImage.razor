@@ -1,0 +1,46 @@
+﻿@page "/FileEx/MobileImage"
+
+<h3>MobileImage</h3>
+
+<div class="file-div">
+    <label for="formFileLg" class="file-label">Example file image upload(.jpg, .jpeg, .png)</label>
+    <InputFile OnChange="@OnInputFileChange" multiple class="file-input" accept="image/*" />
+</div>
+
+@if (imageDataUrls.Count > 0)
+{
+    <h4>선택된 이미지</h4>
+    <br />
+
+    <div class="card" style="width:100%;">
+        <div class="card-body">
+            @foreach (var imageDataUrl in imageDataUrls)
+            {
+                <img class="rounded m-1" src="@imageDataUrl" />
+            }
+        </div>
+    </div>
+}
+
+@* 참고사이트 https://m.blog.naver.com/PostView.nhn?blogId=oralol&logNo=220263644181&proxyReferer=https:%2F%2Fwww.google.com%2F*@
+@code {
+    private IList<string> imageDataUrls = new List<string>();
+    private IReadOnlyList<IBrowserFile> files;
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var maxAllowedFiles = 12;
+        var format = "image/png";
+        files = e.GetMultipleFiles(maxAllowedFiles);
+        foreach (var imageFile in files)
+        {
+            var resizedImageFile = await imageFile.RequestImageFileAsync(format,
+                150, 150);
+            var buffer = new byte[resizedImageFile.Size];
+            await resizedImageFile.OpenReadStream().ReadAsync(buffer);
+            var imageDataUrl =
+                $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+            imageDataUrls.Add(imageDataUrl);
+        }
+    }
+}
