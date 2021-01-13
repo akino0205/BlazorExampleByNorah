@@ -1,0 +1,68 @@
+﻿@page "/WebAPIEx/WeatherInfo"
+@inject WeatherService service
+<h3>WeatherInfo</h3>
+<hr />
+<h3>param</h3>
+<EditForm Model="Input" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>serviceKey</label>
+        <InputText @bind-Value="Input.ServiceKey" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label>pageNo</label>
+        <InputNumber @bind-Value="Input.PageNo" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>numOfRows</label>
+        <InputNumber @bind-Value="Input.NumOfRows" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>dataType</label>
+        @foreach (var radioitem in radios)
+        {
+            <input type="radio" name="itemRadio" checked="@(Input.DataType == radioitem.Value)"
+                   @onchange="(() => Input.DataType = radioitem.Value)" />@radioitem.Text
+            }
+    </div>
+    <div class="form-group">
+        <label>stnId</label>
+        <InputNumber @bind-Value="Input.StnId" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>fromTmFc</label>
+        <InputDate @bind-Value="Input.FromTmFc" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>toTmFc</label>
+        <InputDate @bind-Value="Input.ToTmFc" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+<hr />
+result : @result
+@code {
+    public WeatherInfoParam Input = new WeatherInfoParam()
+    {
+        ServiceKey = "ZHRIEP5M9xrkaouaqE7pMzTjLHk5Fp9Wtye%2BqX021ComSMLbHpr54r7aevlMOJxNLf6qKP%2BBhWV8R9Q2PbCzaQ%3D%3D",
+        PageNo = 1,
+        NumOfRows = 20,
+        DataType = "JSON",
+        StnId = 184,
+        FromTmFc = DateTime.Now.AddDays(-5),
+        ToTmFc = DateTime.Now
+    };
+
+    RadioModel[] radios = new[]
+    {
+        new RadioModel {Value= "JSON", Text="JSON"},
+        new RadioModel {Value= "XML", Text="XML"},
+    };
+
+    private string result;
+
+    private async Task HandleValidSubmit()
+    {
+        result = await service.GetWthrWrnListStr(Input);
+    }
+}

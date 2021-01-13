@@ -46,6 +46,8 @@ namespace BlazorExampleByNorah
             services.Configure<AuthenticationSettings>(Configuration.GetSection("AuthenticationSettings"));
             services.AddScoped<AuthenticationService>();
             services.AddScoped<PostalSearchService>();
+            services.AddScoped<WeatherService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

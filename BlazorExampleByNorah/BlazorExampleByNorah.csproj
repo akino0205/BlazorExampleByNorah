@@ -15,6 +15,7 @@
     <Folder Include="Pages\DIEx\" />
     <Folder Include="Pages\GenericEx\" />
     <Folder Include="Pages\AnimateEx\" />
+    <Folder Include="Pages\ShortcutEx\" />
     <Folder Include="Pages\OptionPatternEx\" />
     <Folder Include="Pages\SettingsEx\" />
     <Folder Include="Pages\SessionEx\" />
