@@ -2,8 +2,8 @@
 @inject WeatherService service
 <h3>WeatherInfo</h3>
 <hr />
-<h3>param</h3>
-<EditForm Model="Input" OnValidSubmit="@HandleValidSubmit">
+<h3>Param</h3>
+<EditForm Model="Input" OnValidSubmit="@GetStringResult">
     <DataAnnotationsValidator />
     <div class="form-group">
         <label>serviceKey</label>
@@ -37,11 +37,47 @@
         <label>toTmFc</label>
         <InputDate @bind-Value="Input.ToTmFc" class="form-control" />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Get string</button>
+    <button type="button" class="btn btn-primary" @onclick="GetListResult">Get list</button>
 </EditForm>
 <hr />
-result : @result
+
+
+@if (isSubmit)
+{
+    <h3>result</h3>
+    if (isString)
+    {
+        @resultStr
+    }
+    else
+    {
+        <table class="rable table-striped table-sm">
+            <tr>
+                <th>Title</th>
+                <th>StnId</th>
+                <th>TmSeq</th>
+                <th>TmFc</th>
+            </tr>
+            @foreach (var item in resultList)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.StnId</td>
+                    <td>@item.TmSeq</td>
+                    <td>@item.TmFc</td>
+                </tr>
+            }
+        </table>
+    }
+}
+
 @code {
+    private bool isSubmit = false;
+    private bool isString;
+    private string resultStr;
+    private List<WeatherInfoResult> resultList;
+
     public WeatherInfoParam Input = new WeatherInfoParam()
     {
         ServiceKey = "ZHRIEP5M9xrkaouaqE7pMzTjLHk5Fp9Wtye%2BqX021ComSMLbHpr54r7aevlMOJxNLf6qKP%2BBhWV8R9Q2PbCzaQ%3D%3D",
@@ -59,10 +95,18 @@ result : @result
         new RadioModel {Value= "XML", Text="XML"},
     };
 
-    private string result;
 
-    private async Task HandleValidSubmit()
+    private async Task GetStringResult()
     {
-        result = await service.GetWthrWrnListStr(Input);
+        resultStr = await service.GetWthrWrnListStr(Input);
+        isSubmit = true;
+        isString = true;
+    }
+
+    private async Task GetListResult()
+    {
+        resultList = await service.GetWthrWrnList(Input);
+        isSubmit = true;
+        isString = false;
     }
 }

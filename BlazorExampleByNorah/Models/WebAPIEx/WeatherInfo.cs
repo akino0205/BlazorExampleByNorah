@@ -18,15 +18,9 @@ namespace BlazorExampleByNorah.Models
 
     public class WeatherInfoResult
     {
-        public string ResultCode { get; set; }
-        public string ResultMsg { get; set; }
-        public int NumOfRows { get; set; }
-        public int PageNo { get; set; }
-        public int TotalCount { get; set; }
-        public string DataType { get; set; }
         public string Title { get; set; }
         public string StnId { get; set; }
-        public DateTime TmSeq { get; set; }
-        public DateTime TmFc { get; set; }
+        public int TmSeq { get; set; }
+        public object TmFc { get; set; }
     }
 }
