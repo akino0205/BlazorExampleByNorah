@@ -1,0 +1,53 @@
+﻿
+<li class="@_dropdownCss @_sideBarCSS">
+    @if (navMenu.hasSubMenu)
+    {
+        <NavLink @onclick="ShowSideMenu">@navMenu.text</NavLink>
+        <div class="sidebar-submenu @_subMenuCSS">
+            <ul>
+                @foreach (var subItem in navMenu.subMenu)
+                {
+                    <li>
+                        <NavLink href="@subItem.href">@subItem.text</NavLink>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <NavLink href="@navMenu.href">@navMenu.text</NavLink>
+    }
+</li>
+
+@code
+{
+    [Parameter]
+    public NavMenuModel navMenu { get; set; }
+
+    private bool _isShow = false;
+    private string _dropdownCss;
+    private string _subMenuCSS => setDisplay(_isShow);
+    private string _sideBarCSS => setActive(_isShow);
+
+    protected override void OnInitialized()
+    {
+        if (navMenu.hasSubMenu)
+            _dropdownCss = "sidebar-dropdown";
+    }
+
+    protected void ShowSideMenu()
+    {
+        _isShow = !_isShow;
+    }
+
+    protected string setDisplay(bool isShow)
+    {
+        return isShow ? "display" : "hidden";
+    }
+
+    protected string setActive(bool isShow)
+    {
+        return isShow ? "active" : string.Empty;
+    }
+}
