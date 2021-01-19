@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
+@* https://docs.telerik.com/blazor-ui/getting-started/client-blazor#step-3---add-a-telerik-component-to-a-view *@
 <div class="sidebar">
     <NavMenu />
 </div>
@@ -10,6 +11,8 @@
     </div>
 
     <div class="content px-4">
-        @Body
+        <TelerikRootComponent>
+            @Body
+        </TelerikRootComponent>
     </div>
 </div>

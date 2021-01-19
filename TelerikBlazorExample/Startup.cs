@@ -31,8 +31,13 @@ namespace TelerikBlazorExample
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
+            //Telerik https://docs.telerik.com/blazor-ui/getting-started/client-blazor#step-3---add-a-telerik-component-to-a-view
+            services.AddTelerikBlazor();
+
             //NavMenu
             services.AddScoped<NavMenuService>();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

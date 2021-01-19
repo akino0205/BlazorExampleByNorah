@@ -1,0 +1,126 @@
+﻿@page "/Input/BasicInputForm"
+@inject NavigationManager navigatoinManager
+<div style="width: 50%; display: inline-block;">
+    <h3>BasicInputForm</h3>
+    <EditForm Model="model" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label>TextBox</label>
+            <TelerikTextBox class="form-control" @bind-Value="model.inputTextStr"></TelerikTextBox>
+        </div>
+        <div class="form-group">
+            <label>TextBox Password</label>
+            <TelerikTextBox class="form-control" 
+                            Password="true"
+                            @bind-Value="model.inputPassword">
+            </TelerikTextBox>
+        </div>
+        <div class="form-group">
+            <label>NumericTextBox</label>
+            <TelerikNumericTextBox class="form-control" @bind-Value="model.inputTextInt" />
+        </div>
+        <div class="form-group">
+            <label>Date Input</label>
+            <TelerikDateInput class="form-control" @bind-Value="model.inputTextDate" Format="yyyy MMMM dd" @ref="theDateInput"></TelerikDateInput>
+        </div>
+        <div class="form-group">
+            <label>Date Picker</label>
+            <TelerikDatePicker class="form-control" @bind-Value="model.inputTextDate2" @ref="theDatePicker"></TelerikDatePicker>
+        </div>
+        <div class="form-group">
+            <label>DateRange Picker</label><br />
+            <TelerikDateRangePicker @bind-StartValue="model.inputTextDateRangeStart"
+                                    @bind-EndValue="model.inputTextDateRangeEnd">
+            </TelerikDateRangePicker>
+        </div>
+        <div class="form-group">
+            <label>DateTime Picker</label><br />
+            <TelerikDateTimePicker class="form-control" 
+                                   Min="@Min" Max="@Max" @bind-Value="@model.inputTextDateTime"
+                                   Format="yyyy MMM dd HH:mm:ss" Width="250px"></TelerikDateTimePicker>
+        </div>
+        <div class="form-group">
+            <label>TextArea</label><br />
+            <TelerikTextArea @bind-Value="model.textArea">
+            </TelerikTextArea>
+        </div>
+        <div class="form-group">
+            <label>Checkbox</label><br />
+            <TelerikCheckBox Id="myCheckBox" @bind-Value="model.isChecked" />
+            <label for="myCheckBox">@( model.isChecked ? "Selected" : "Not selected" )</label>
+        </div>
+        <div class="form-group">
+            <label>RadioGroup</label>
+            <TelerikRadioGroup Data="@radios"
+                               @bind-Value="@model.checkedRadio"
+                               ValueField="@nameof(RadioModel.Value)"
+                               TextField="@nameof(RadioModel.Text)">
+            </TelerikRadioGroup>
+        </div>
+        <div class="form-group">
+            <label>DropDownList</label><br />
+            <TelerikDropDownList Data="@options" TextField="Text" ValueField="Value" @bind-Value="model.selectedSelection">
+            </TelerikDropDownList>
+            </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-warning" @onclick="OnClickCancelBtn">Cancel</button>
+    </EditForm>
+</div>
+
+@if (isSubmit)
+{
+    <div style="display: inline-block; vertical-align: top; padding-left: 40px;">
+        <BasicInputResult model="@model" />
+        <button type="button" @onclick="RestartInputForm" class="btn btn-danger">Restart</button>
+    </div>
+}
+
+@code {
+    private BasicInputModel model = new BasicInputModel()
+    {
+        inputTextDate = DateTime.Now,
+        inputTextDate2 = DateTime.Now,
+        inputTextDateRangeStart = DateTime.Now,
+        inputTextDateRangeEnd = DateTime.Now.AddDays(10),
+        inputTextDateTime = DateTime.Now,
+        checkedRadio = "1",
+    };
+
+    TelerikDateInput<DateTime> theDateInput;
+    TelerikDatePicker<DateTime> theDatePicker;
+    private DateTime Min = new DateTime(1990, 1, 1, 8, 15, 0);
+    private DateTime Max = new DateTime(2025, 1, 1, 19, 30, 45);
+    private bool isSubmit;
+
+    List<RadioModel> radios { get; set; } = new List<RadioModel>
+    {
+        new RadioModel {Value= "1", Text="1"},
+        new RadioModel {Value= "2", Text="2"},
+        new RadioModel {Value= "3", Text="3"},
+    };
+
+    IEnumerable<SelectModel> options = Enumerable.Range(1, 20).Select(x => new SelectModel { Text = "item " + x, Value = "value" + x });
+
+    private void HandleValidSubmit()
+    {
+        isSubmit = true;
+    }
+
+    private void OnClickCancelBtn()
+    {
+        model = new BasicInputModel()
+        {
+            inputTextDate = DateTime.Now,
+            inputTextDate2 = DateTime.Now,
+            inputTextDateRangeStart = DateTime.Now,
+            inputTextDateRangeEnd = DateTime.Now.AddDays(10),
+            inputTextDateTime = DateTime.Now,
+            checkedRadio = "1",
+        };
+    }
+    private void RestartInputForm()
+    {
+        isSubmit = false;
+        OnClickCancelBtn();
+    }
+}

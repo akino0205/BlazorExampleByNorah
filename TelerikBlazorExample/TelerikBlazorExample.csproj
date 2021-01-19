@@ -8,4 +8,10 @@
     <PackageReference Include="Telerik.UI.for.Blazor.Trial" Version="2.20.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\ForDesigner\" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>
