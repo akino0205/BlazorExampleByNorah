@@ -1,0 +1,64 @@
+﻿@page "/Grid/IndexWithMain"
+@using System.Data
+@using Telerik.DataSource.Extensions
+
+@inject GraphQLService service
+
+<h3>Grid</h3>
+<TelerikGrid Data="@fullTextList"
+             EditMode="@GridEditMode.Inline"
+             Resizable="true"
+             Sortable="@true"
+             Pageable="@true"
+             PageSize=@PageSize
+             OnCreate="@CreateHandler"
+             OnDelete="@DeleteHandler"
+             OnUpdate="@UpdateHandler"
+             TotalCount="@Total">
+    <GridToolBar>
+        <GridCommandButton Command="Add" Icon="add">Add</GridCommandButton>
+    </GridToolBar>
+    <GridColumns>
+        @*You can also manually generate all the columns by yourself by looping over the columns in the DataTable.
+            Make sure you set the FieldType parameter. It is mandatory for dynamic objects like DataTables and Dictionaries*@
+        <GridColumn Field="@nameof(FullTextMainModel.Fulltext_main.idx)" Title="No." FieldType="@typeof(int)" Width="50px" />
+        <GridColumn Field="@nameof(FullTextMainModel.Fulltext_main.patentNumber)" Title="Patent Number" FieldType="@typeof(string)" Width="100px" />
+        <GridColumn Field="@nameof(FullTextMainModel.Fulltext_main.applicationDate)" Title="Application Date" FieldType="@typeof(DateTime)" Width="100px" />
+        <GridColumn Field="@nameof(FullTextMainModel.Fulltext_main.collection)" Title="Col" FieldType="@typeof(string)" Width="100px" />
+        <GridColumn Field="@nameof(FullTextMainModel.Fulltext_main.title)" Title="Title" FieldType="@typeof(string)" Width="300px" />
+        <GridCommandColumn Width="200px">
+            <GridCommandButton Command="Edit" Icon="edit">Edit</GridCommandButton>
+            <GridCommandButton Command="Save" Icon="save" ShowInEdit="true">Update</GridCommandButton>
+            <GridCommandButton Command="Delete" Icon="delete">Delete</GridCommandButton>
+            <GridCommandButton Command="Cancel" Icon="cancel" ShowInEdit="true">Cancel</GridCommandButton>
+        </GridCommandColumn>
+    </GridColumns>
+</TelerikGrid>
+@code {
+    public int PageSize = 15;
+    public List<FullTextMainModel.Fulltext_main> fullTextList = new List<FullTextMainModel.Fulltext_main>();
+    public int Total { get; set; }
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        fullTextList = await service.GetFullTextListAsync(false);
+    }
+
+    public void CreateHandler(GridCommandEventArgs args)
+    {
+
+    }
+
+    public void DeleteHandler(GridCommandEventArgs args)
+    {
+
+    }
+
+    public void UpdateHandler(GridCommandEventArgs args)
+    {
+
+    }
+
+
+}

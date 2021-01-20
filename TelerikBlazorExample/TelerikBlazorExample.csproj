@@ -5,6 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GraphQL.Client" Version="3.2.1" />
+    <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="3.2.1" />
+    <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
     <PackageReference Include="Telerik.UI.for.Blazor.Trial" Version="2.20.0" />
   </ItemGroup>
 

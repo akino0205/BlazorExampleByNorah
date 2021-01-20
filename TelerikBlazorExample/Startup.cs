@@ -1,3 +1,4 @@
+using GraphQL.Client.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using TelerikBlazorExample.Data;
 using TelerikBlazorExample.Services;
@@ -29,7 +31,6 @@ namespace TelerikBlazorExample
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
 
             //Telerik https://docs.telerik.com/blazor-ui/getting-started/client-blazor#step-3---add-a-telerik-component-to-a-view
             services.AddTelerikBlazor();
@@ -37,7 +38,12 @@ namespace TelerikBlazorExample
             //NavMenu
             services.AddScoped<NavMenuService>();
 
-            
+            //WebApiAddress
+            services.Configure<WebApiAddress>(Configuration.GetSection("WebApiAddress"));
+            services.AddTransient<HttpClient>();
+
+            //Grid with GraphQL
+            services.AddScoped<GraphQLService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
