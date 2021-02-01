@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Net.Http;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 namespace BlazorExampleByNorah
 {
@@ -42,6 +43,10 @@ namespace BlazorExampleByNorah
             //SettingsEx
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
+            //ShortcutEx
+            services.AddHotKeys();
+
+            
             //WebAPIEx
             services.Configure<AuthenticationSettings>(Configuration.GetSection("AuthenticationSettings"));
             services.AddScoped<AuthenticationService>();

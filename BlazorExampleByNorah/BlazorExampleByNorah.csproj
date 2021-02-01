@@ -11,11 +11,9 @@
   <ItemGroup>
     <Folder Include="Data\NewFolder\" />
     <Folder Include="Pages\LogEx\" />
-    <Folder Include="Pages\CookieEx\" />
     <Folder Include="Pages\DIEx\" />
     <Folder Include="Pages\GenericEx\" />
     <Folder Include="Pages\AnimateEx\" />
-    <Folder Include="Pages\ShortcutEx\" />
     <Folder Include="Pages\OptionPatternEx\" />
     <Folder Include="Pages\SettingsEx\" />
     <Folder Include="Pages\SessionEx\" />
@@ -34,12 +32,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.SessionStorage" Version="1.0.13" />
     <PackageReference Include="BuildWebCompiler" Version="1.12.394" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+    <PackageReference Include="Toolbelt.Blazor.HotKeys" Version="10.0.0" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

@@ -1,0 +1,45 @@
+﻿@page "/ShortcutEx"
+@page "/ShortcutEx/Index"
+
+@implements IDisposable
+@using Toolbelt.Blazor.HotKeys
+@inject HotKeys HotKeys
+
+<h1>Shortcut</h1>
+<ul>
+    @foreach (var key in this.HotKeysContext.Keys)
+    {
+        <li>@key</li>
+    }
+</ul>
+
+<h3>@message</h3>
+
+@code {
+    string message;
+    HotKeysContext HotKeysContext;
+
+    protected override void OnInitialized()
+    {
+        this.HotKeysContext = this.HotKeys.CreateContext()
+          .Add(ModKeys.Ctrl | ModKeys.Shift, Keys.A, FooBar, "do foo bar.")
+          .Add(ModKeys.None, Keys.F5, PressF5, "press F5");
+    }
+
+    private void FooBar() // <- This will be invoked when Ctrl+Shift+A typed.
+    {
+        message = "FooBar";
+        StateHasChanged();
+    }
+
+    private void PressF5()
+    {
+        message = "PressF5";
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        this.HotKeysContext.Dispose();
+    }
+}
